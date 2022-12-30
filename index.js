@@ -76,6 +76,23 @@ async function run() {
             res.send(result);
         });
 
+         // update an user
+
+         app.put('/googleusers/:email', async (req, res) => {
+            const email = req.params.email;
+            const profile = req.body;
+            const filter = { email };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    name: profile.name,
+                    email: profile.email,
+                }
+            }
+            const result = await usersCollection.updateOne(filter, updatedDoc, options);
+            res.send(result);
+        });
+
         // get all post
         app.get('/posts', async (req, res) => {
             const query = {};
@@ -104,6 +121,22 @@ async function run() {
         app.post('/post', async (req, res) => {
             const post = req.body;
             const result = await postsCollection.insertOne(post);
+            res.send(result);
+        });
+
+         // update an user
+
+         app.put('/comments/:id', async (req, res) => {
+            const id = req.params.id;
+            const comment = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $push: {
+                    comments: {comment},
+                }
+            }
+            const result = await postsCollection.updateOne(filter, updatedDoc, options);
             res.send(result);
         });
 
