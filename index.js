@@ -76,7 +76,7 @@ async function run() {
             res.send(result);
         });
 
-         // update an user
+         // update an googleuser
 
          app.put('/googleusers/:email', async (req, res) => {
             const email = req.params.email;
@@ -124,7 +124,7 @@ async function run() {
             res.send(result);
         });
 
-         // update an user
+         // add comments
 
          app.put('/comments/:id', async (req, res) => {
             const id = req.params.id;
